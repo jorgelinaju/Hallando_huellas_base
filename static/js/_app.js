@@ -1,14 +1,3 @@
-// pages/_app.js
-import { SpeedInsights } from "@vercel/speed-insights/next";
-import '../styles/globals.css'; // Importa tus estilos
+import { injectSpeedInsights } from '@vercel/speed-insights';
 
-function MyApp({ Component, pageProps }) {
-  return (
-    <>
-      <SpeedInsights />
-      <Component {...pageProps} />
-    </>
-  );
-}
-
-export default MyApp;
+injectSpeedInsights();
