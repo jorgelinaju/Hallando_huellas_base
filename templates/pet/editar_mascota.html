@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Mascota</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin: 10px 0 5px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        textarea {
+            resize: vertical;
+            height: 80px;
+        }
+
+        input[type="checkbox"] {
+            margin: 10px 0;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .cancel-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .cancel-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Editar Mascota: {{ mascota.nombre }}</h1>
+        
+        <form method="POST" action="{{ url_for('editar_mascota', id=mascota.id) }}">
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre" name="nombre" value="{{ mascota.nombre }}" required>
+
+            <label for="que_mascota">Tipo de Mascota:</label>
+            <input type="text" id="que_mascota" name="que_mascota" value="{{ mascota.que_mascota }}" required>
+
+            <label for="raza">Raza:</label>
+            <input type="text" id="raza" name="raza" value="{{ mascota.raza }}" required>
+
+            <label for="color">Color:</label>
+            <input type="text" id="color" name="color" value="{{ mascota.color }}">
+
+            <label for="anios_mascota">Edad (años):</label>
+            <input type="number" id="anios_mascota" name="anios_mascota" value="{{ mascota.anios_mascota }}">
+
+            <label for="caracteristicas">Características:</label>
+            <textarea id="caracteristicas" name="caracteristicas">{{ mascota.caracteristicas }}</textarea>
+
+            <label for="enfermedades">Enfermedades:</label>
+            <textarea id="enfermedades" name="enfermedades">{{ mascota.enfermedades }}</textarea>
+
+            <label for="vacunado">¿Está vacunado?</label>
+            <input type="checkbox" id="vacunado" name="vacunado" {% if mascota.vacunado %}checked{% endif %}>
+
+            <label for="medicamento">Medicamento:</label>
+            <input type="text" id="medicamento" name="medicamento" value="{{ mascota.medicamento }}">
+
+            <label for="castrado">¿Está castrado?</label>
+            <input type="checkbox" id="castrado" name="castrado" {% if mascota.castrado %}checked{% endif %}>
+
+            <button type="submit">Guardar Cambios</button>
+        </form>
+
+        <a href="{{ url_for('mostrar_mascotas') }}" class="cancel-link">Cancelar</a>
+    </div>
+</body>
+</html>

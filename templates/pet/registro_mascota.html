@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <title>Datos de tu Mascota</title>
+  </head>
+ 
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+  <body>
+    <div class="card">
+      <div>
+        <img src="{{ url_for('static', filename='images/mascotas.png') }}" class="img-fluid" alt="mascotas" height="300" width="90%">
+      </div>
+      <div class="card-header">
+        <p class="card-text text-center">Ingrese los datos para agregar a su mascota a nuestra familia.</p>
+      </div>
+      <div class="card-body">
+        <h1 class="card-title text-center fw-bold">Datos de su mascota</h1>
+        <div class="container mt-4 d-flex justify-content-center align-items-center">
+
+          {% if error %}
+          <div class="alert alert-danger" role="alert">
+            <h4 class="alert-heading">Error</h4>
+            <p>El formulario no se ha enviado correctamente.</p>
+            <hr>
+            <p class="mb-0">{{ error }}</p>
+          </div>
+          {% endif %}
+
+          <form method="POST" action="{{ url_for('agregar_mascota') }}" class="mt-3">
+            <div class="row mb-3">
+              <label for="nombre" class="form-label">Nombre</label>
+              <div class="col">
+                <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre de la Mascota" required />
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <label for="que_mascota" class="form-label">¿Qué mascota es?</label>
+              <div class="col">
+                <input type="text" class="form-control" id="que_mascota" name="que_mascota" placeholder="Tipo de mascota" required />
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <label for="raza" class="form-label">Raza</label>
+              <div class="col">
+                <input type="text" class="form-control" id="raza" name="raza" placeholder="Raza de su mascota" />
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <label for="color" class="form-label">Color</label>
+              <div class="col">
+                <input type="text" class="form-control" id="color" name="color" placeholder="Color de su mascota" />
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <label for="anios_mascota" class="form-label">Años</label>
+              <div class="col">
+                <input type="number" class="form-control" id="anios_mascota" name="anios_mascota" placeholder="Años de la mascota" min="0" />
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <label for="caracteristicas" class="form-label">Características</label>
+              <div class="col">
+                <input type="text" class="form-control" id="caracteristicas" name="caracteristicas" placeholder="Características de su mascota" />
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <label for="enfermedades" class="form-label">¿Historia clínica? Lo más específico posible</label>
+              <div class="col">
+                <input type="text" class="form-control" id="enfermedades" name="enfermedades" placeholder="Historial clínico de su mascota" />
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <label for="vacunado" class="form-label">¿Tiene todas las vacunas?</label>
+              <div class="col">
+                <div class="form-check">
+                  <input type="radio" class="form-check-input" id="vacunado_si" name="vacunado" value="1" required>
+                  <label class="form-check-label" for="vacunado_si">Sí</label>
+                </div>
+                <div class="form-check">
+                  <input type="radio" class="form-check-input" id="vacunado_no" name="vacunado" value="0" required>
+                  <label class="form-check-label" for="vacunado_no">No</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <label for="medicamento" class="form-label">¿Toma algún medicamento?</label>
+              <div class="col">
+                <input type="text" class="form-control" id="medicamento" name="medicamento" placeholder="Nombre del medicamento" />
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <label for="castrado" class="form-label">¿Está castrado?</label>
+              <div class="col">
+                <div class="form-check">
+                  <input type="radio" class="form-check-input" id="castrado_si" name="castrado" value="1" required>
+                  <label class="form-check-label" for="castrado_si">Sí</label>
+                </div>
+                <div class="form-check">
+                  <input type="radio" class="form-check-input" id="castrado_no" name="castrado" value="0" required>
+                  <label class="form-check-label" for="castrado_no">No</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <label for="otrasmasc" class="form-label">¿Cómo se lleva con otras mascotas?</label>
+              <div class="col">
+                <input type="text" class="form-control" id="otrasmasc" name="otrasmasc" placeholder="Describa cómo interactúa con otras mascotas" />
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <label for="tratopers" class="form-label">¿Cómo describirías el trato con adultos y niños?</label>
+              <div class="col">
+                <input type="text" class="form-control" id="tratopers" name="tratopers" placeholder="Describa su comportamiento con personas" />
+              </div>
+            </div>
+
+            <div class="d-grid">
+              <button type="submit" id="submit" name="submit" class="text-center btn btn-success">Enviar</button>
+            </div>
+          </form>
+          <a href="{{ url_for('mostrar_mascotas') }}">Volver a la lista de mascotas</a>
+        </div>
+      </div>
+    </div>
+  </body>  
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</html> 
