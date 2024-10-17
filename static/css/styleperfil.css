@@ -8,11 +8,11 @@
 
 body {
     background-color: #f2f2f2;
-    color: #333;
+    color: #0A5D91;
 }
 
 .header {
-    background-color: #333;
+    background-color: #0A5D91;
     color: #fff;
     padding: 15px;
     text-align: center;
@@ -27,7 +27,7 @@ body {
 .heading {
     text-align: center;
     margin-top: 20px;
-    color: #333;
+    color: #0A5D91;
 }
 
 .user-profile {
@@ -90,7 +90,7 @@ body {
     margin: 5px;
     font-size: 14px;
     color: #fff;
-    background-color: #333;
+    background-color: #0A5D91;
     text-decoration: none;
     border-radius: 4px;
     transition: background-color 0.3s;
