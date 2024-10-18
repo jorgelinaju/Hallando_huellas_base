@@ -150,7 +150,22 @@ def login():
 #         error = "El telefono debe ser númerico y mayor a 6 caracteres. Contraseña debe tener de 8 a 20 caracteres."
 #         return render_template("auth/register.html", form=form, error=error)
 
+# Ruta para mostrar el perfil
+@app.route('/perfil')
+def perfil():
+    return render_template('perfil.html', usuario=usuario)
 
+# Ruta para editar el perfil
+@app.route('/editar-perfil', methods=['GET', 'POST'])
+def editar_perfil():
+    if request.method == 'POST':
+        # Actualizar los datos del usuario con los valores enviados desde el formulario
+        usuario['nombre_usuario'] = request.form['nombre_usuario']
+        usuario['email'] = request.form['email']
+        usuario['nombre_mascota'] = request.form['nombre_mascota']
+        usuario['edad_mascota'] = request.form['edad_mascota']
+        return redirect(url_for('perfil'))  # Redirige a la página de perfil después de guardar los cambios
+    return render_template('editar-perfil.html', usuario=usuario)
 
 
 
