@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, Response, session, flash, url_for
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, EmailField, TelField, SubmitField
+from wtforms import StringField, PasswordField, EmailField, TelField, SubmitField, IntegerField
 from wtforms.validators import DataRequired, Length, Email, EqualTo
 from flask_mysqldb import MySQL
 from bcrypt import hashpw, gensalt, checkpw
@@ -150,6 +150,18 @@ def login():
 #         error = "El telefono debe ser númerico y mayor a 6 caracteres. Contraseña debe tener de 8 a 20 caracteres."
 #         return render_template("auth/register.html", form=form, error=error)
 
+
+# Formulario de Perfil y Edición
+class PerfilForm(FlaskForm):
+    name = StringField('Nombre', validators=[DataRequired()])
+    surname = StringField('Apellido', validators=[DataRequired()])
+    address = StringField('Dirección', validators=[DataRequired()])
+    phone = StringField('Teléfono', validators=[DataRequired()])
+    email = StringField('Correo Electrónico', validators=[DataRequired(), Email()])
+    password = PasswordField('Contraseña', validators=[DataRequired()])
+    confirm_password = PasswordField('Confirmar Contraseña', validators=[DataRequired(), EqualTo('password')])
+    submit = SubmitField('Guardar Cambios')
+    
 # Ruta para mostrar el perfil
 @app.route('/perfil')
 def perfil():
@@ -158,14 +170,29 @@ def perfil():
 # Ruta para editar el perfil
 @app.route('/editar-perfil', methods=['GET', 'POST'])
 def editar_perfil():
-    if request.method == 'POST':
-        # Actualizar los datos del usuario con los valores enviados desde el formulario
-        usuario['nombre_usuario'] = request.form['nombre_usuario']
-        usuario['email'] = request.form['email']
-        usuario['nombre_mascota'] = request.form['nombre_mascota']
-        usuario['edad_mascota'] = request.form['edad_mascota']
-        return redirect(url_for('perfil'))  # Redirige a la página de perfil después de guardar los cambios
-    return render_template('editar-perfil.html', usuario=usuario)
+    form = PerfilForm()
+   
+    if form.validate_on_submit():
+        # Actualizamos los datos del usuario con lo ingresado en el formulario
+        usuario['name'] = form.name.data
+        usuario['surname'] = form.surname.data
+        usuario['address'] = form.address.data
+        usuario['phone'] = form.phone.data
+        usuario['email'] = form.email.data
+        # La contraseña se debería cifrar en producción
+        usuario['password'] = form.password.data
+        
+        flash('Perfil actualizado correctamente', 'success')
+        return redirect(url_for('perfil'))
+        
+    # Se Pre-cargan los datos actuales del usuario en el formulario
+    form.name.data = usuario['name']
+    form.surname.data = usuario['surname']
+    form.address.data = usuario['address']
+    form.phone.data = usuario['phone']
+    form.email.data = usuario['email']
+
+    return render_template('editar-perfil.html', form=form)    
 
 
 
